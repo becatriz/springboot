@@ -1,11 +1,10 @@
 package com.curso.api.rest.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class Usuario implements Serializable{
@@ -18,6 +17,13 @@ public class Usuario implements Serializable{
 	private String login;
 	private String senha;
 	private String nome;
+
+	@OneToMany(mappedBy = "usuario", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Telefone> telefones = new ArrayList<Telefone>();
+
+
+
+
 	public Long getId() {
 		return id;
 	}
@@ -42,6 +48,15 @@ public class Usuario implements Serializable{
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+
+	public void setTelefones(List<Telefone> telefones) {
+		this.telefones = telefones;
+	}
+
+	public List<Telefone> getTelefones() {
+		return telefones;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
